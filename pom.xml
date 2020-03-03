@@ -27,6 +27,14 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <configuration>
+          <mainClass>test.ModelTest</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
