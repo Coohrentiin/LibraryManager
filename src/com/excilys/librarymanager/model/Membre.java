@@ -12,6 +12,14 @@ public class Membre{
 	public Membre(){
 		super();
 	}
+	public Membre(String nom, String prenom, String adresse, String email, String telephone){
+		this();
+		this.nom=nom;
+		this.prenom=prenom;
+		this.adresse=adresse;
+		this.email=email;
+		this.telephone=telephone;
+	}
 	public Membre(String nom, String prenom, String adresse, String email, String telephone, Abonnement abonnement){
 		this();
 		this.nom=nom;
