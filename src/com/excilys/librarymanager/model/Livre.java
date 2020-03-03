@@ -12,7 +12,8 @@ public class Livre{
 	public Livre(String titre, String auteur, String isbn) {
 		this();
 		this.titre = titre;
-		this.auteur = auteur;
+        this.auteur = auteur;
+        this.isbn = isbn;
 	}
 	public Livre(Integer id, String titre, String auteur, String isbn) {
 		this(titre, auteur, isbn);
