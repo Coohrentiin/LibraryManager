@@ -28,55 +28,40 @@ public class MembreDaoImpl implements MembreDao{
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Membre;";
 	private static final String UPDATE_QUERY = "UPDATE Membre SET nom=?, prenom=?, adresse=?, email=?, telephone=?, abonnement=? WHERE id=?;";
 	private static final String DELETE_QUERY = "DELETE FROM Membre WHERE id=?;";
-	private static final String COUNT_QUERY = "SELECT COUNT(id) AS count FROM Membre";
+	private static final String COUNT_QUERY = "SELECT COUNT(id) AS count FROM Membre;";
 
 	@Override
 	public int create(String nom, String prenom, String adresse, String email, String telephone) throws DaoException {
 		Membre membre=new Membre(nom,prenom,adresse,email,telephone);
-		ResultSet res = null;
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	
 		int id = -1;
-		try {
-			connection = EstablishConnection.getConnection();
-			preparedStatement = connection.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, membre.getNom());
-			preparedStatement.setString(2, membre.getPrenom());
-			preparedStatement.setString(3, membre.getAdresse());
-			preparedStatement.setString(4, membre.getEmail());
-			preparedStatement.setString(5, membre.getTelephone());
-			preparedStatement.setString(6, membre.getAbonnement().toString());
-
-			preparedStatement.executeUpdate();
-			res = preparedStatement.getGeneratedKeys();
+		try(
+			Connection connection = EstablishConnection.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
+			ResultSet res = setResCreate(membre, preparedStatement);
+		) {
 			if(res.next()){
 				id = res.getInt(1);				
 			}
-
 			System.out.println("CREATE: " + membre);
 		} catch (SQLException e) {
-			throw new DaoException("Probleme lors de la creation du membre: " + membre, e);
-		} finally {
-			// Ici pour bien faire les choses on doit fermer les objets utilis�s dans
-			// des blocs s�par�s afin que les exceptions lev�es n'emp�chent pas la fermeture des autres !
-			// la logique est la m�me pour les autres m�thodes. Pour rappel, le bloc finally sera toujours ex�cut� !
-			try {
-				res.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+			throw new DaoException("Probleme lors de la creation du membre: " + membre +" error : " +e.getMessage());
+		} 
 		return id;
+	}
+
+
+	private ResultSet setResCreate(Membre membre, PreparedStatement preparedStatement) throws SQLException {
+		
+		preparedStatement.setString(1, membre.getNom());
+		preparedStatement.setString(2, membre.getPrenom());
+		preparedStatement.setString(3, membre.getAdresse());
+		preparedStatement.setString(4, membre.getEmail());
+		preparedStatement.setString(5, membre.getTelephone());
+		preparedStatement.setString(6, Abonnement.BASIC.toString());
+
+		preparedStatement.executeUpdate();
+		return preparedStatement.getGeneratedKeys();
 	} 
 
 	@Override
@@ -97,12 +82,12 @@ public class MembreDaoImpl implements MembreDao{
 				membre.setEmail(res.getString("email"));
 				membre.setAdresse(res.getString("adresse"));
 				membre.setTelephone(res.getString("telephone"));
-							
+				membre.setAbonnement(Abonnement.valueOf(res.getString("abonnement")));		
 			}
 			
 			System.out.println("GET: " + membre);
 		} catch (SQLException e) {
-			throw new DaoException("Probleme lors de la recuperation du membre: id=" + id, e);
+			throw new DaoException("Probleme lors de la recuperation du membre: id=" + id+" error : " +e.getMessage());
 		} finally {
 			try {
 				res.close();
@@ -137,43 +122,35 @@ public class MembreDaoImpl implements MembreDao{
 			}
 			System.out.println("GET: " + membres);
 		} catch (SQLException e) {
-			throw new DaoException("Problème lors de la récupération de la liste des membres", e);
+			throw new DaoException("Problème lors de la récupération de la liste des membres"+" error : " +e.getMessage());
 		}
 		return membres;
 	}
 
 	@Override
 	public void update(Membre membre) throws DaoException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			connection = EstablishConnection.getConnection();
-			preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-			preparedStatement.setString(1, membre.getNom());
-			preparedStatement.setString(2, membre.getPrenom());
-			preparedStatement.setString(3, membre.getEmail());
-			preparedStatement.setString(4, membre.getAdresse());
-			preparedStatement.setString(5, membre.getTelephone());
-			preparedStatement.setInt(6, membre.getId());
-			preparedStatement.executeUpdate();
-
+		try (
+			Connection connection = EstablishConnection.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+		)
+		{			
+			SetResUpdate(membre, preparedStatement);
 			System.out.println("UPDATE: " + membre);
 		} catch (SQLException e) {
-			throw new DaoException("Probleme lors de la mise à jour du membre: " + membre, e);
-		} finally {
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+			throw new DaoException("Probleme lors de la mise à jour du membre: " + membre+" error : " +e.getMessage());
+		} 
 		// return membre.getId();
 	}//ok
+	private void SetResUpdate(Membre membre, PreparedStatement preparedStatement) throws SQLException {
+		preparedStatement.setString(1, membre.getNom());
+		preparedStatement.setString(2, membre.getPrenom());
+		preparedStatement.setString(3, membre.getEmail());
+		preparedStatement.setString(4, membre.getAdresse());
+		preparedStatement.setString(5, membre.getTelephone());
+		preparedStatement.setString(6, membre.getAbonnement().toString());
+		preparedStatement.setInt(7, membre.getId());
+		preparedStatement.executeUpdate();
+	}
 
 	@Override
 	public void delete(int id) throws DaoException {
@@ -188,7 +165,7 @@ public class MembreDaoImpl implements MembreDao{
 			connection.close();
 			System.out.println("DELETE: " + id);
 		} catch (SQLException e) {
-			throw new DaoException("Problème lors de la suppression du membre: " + id, e);
+			throw new DaoException("Problème lors de la suppression du membre: " + id+" error : " +e.getMessage());
 		}  finally {
 			try {
 				preparedStatement.close();
@@ -215,7 +192,7 @@ public class MembreDaoImpl implements MembreDao{
 			compteur = res.getInt(1);
 			System.out.println("NUMBER: " + compteur);
 		} catch (SQLException e) {
-			throw new DaoException("Problème lors de la récupération du nombre de membres", e);
+			throw new DaoException("Problème lors de la récupération du nombre de membres"+" error : " +e.getMessage());
 		}
 		return compteur;
 	}

@@ -1,9 +1,10 @@
+package com.excilys.librarymanager.services;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.excilys.librarymanager.exception.ServiceException;
-import com.excilys.librarymanager.modele.Emprunt;
-import com.excilys.librarymanager.modele.Membre;
+import com.excilys.librarymanager.model.Emprunt;
+import com.excilys.librarymanager.model.Membre;
 
 public interface EmpruntService {
 	public List<Emprunt> getList() throws ServiceException;
