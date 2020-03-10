@@ -10,7 +10,13 @@ public class Emprunt{
 
     public Emprunt() {
 		super();
-	}
+    }
+    public Emprunt(Integer idMembre, Integer idLivre, LocalDate dateEmprunt) {
+		this();
+		this.idMembre = idMembre;
+        this.idLivre = idLivre;
+        this.dateEmprunt = dateEmprunt;
+    }
 	public Emprunt(Integer idMembre, Integer idLivre, LocalDate dateEmprunt, LocalDate dateRetour) {
 		this();
 		this.idMembre = idMembre;

@@ -197,13 +197,12 @@ public class LivreDaoImpl implements LivreDao{
     @Override
 	public int count() throws DaoException {
         int compteur;
-		List<Livre> livres = new ArrayList<>();
 		
 		try (Connection connection = EstablishConnection.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(COUNT_QUERY);
 			 ResultSet res = preparedStatement.executeQuery();
 				){
-			compteur = res.getInt();
+			compteur = res.getInt(1);
 			System.out.println("NUMBER: " + compteur);
 		} catch (SQLException e) {
 			throw new DaoException("Probl�me lors de la r�cup�ration du nombre de livres", e);

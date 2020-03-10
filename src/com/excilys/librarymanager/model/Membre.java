@@ -30,6 +30,26 @@ public class Membre{
 		this.abonnement=abonnement;
 	}
 
+	public Membre(int id, String nom, String prenom, String adresse, String email, String telephone, Abonnement abonnement){
+		this();
+		this.id=id;
+		this.nom=nom;
+		this.prenom=prenom;
+		this.adresse=adresse;
+		this.email=email;
+		this.telephone=telephone;
+		this.abonnement=abonnement;
+	}
+
+	public Membre(int id, String nom, String prenom, String adresse, String email, String telephone){
+		this();
+		this.id=id;
+		this.nom=nom;
+		this.prenom=prenom;
+		this.adresse=adresse;
+		this.email=email;
+		this.telephone=telephone;
+	}
 	public void setNom(String nom){
 		this.nom=nom;
 	}
@@ -48,7 +68,9 @@ public class Membre{
 	public void setAbonnement(Abonnement abonnement){
 		this.abonnement=abonnement;
 	}
-
+	public void setId(Integer id){
+		this.id=id;
+	}
 	public String getNom(){
 		return nom;
 	}
@@ -66,6 +88,9 @@ public class Membre{
 	}
 	public Abonnement getAbonnement(){
 		return abonnement;
+	}
+	public Integer getId(){
+		return id;
 	}
 	@Override
 	public String toString() {

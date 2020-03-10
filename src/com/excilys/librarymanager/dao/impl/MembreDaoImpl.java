@@ -10,8 +10,9 @@ import java.util.List;
 
 import com.excilys.librarymanager.dao.*;
 import com.excilys.librarymanager.model.*;
-
 import com.excilys.librarymanager.utils.*;
+
+import com.excilys.librarymanager.exception.DaoException;
 
 public class MembreDaoImpl implements MembreDao{
 	private static MembreDao instance;
@@ -27,6 +28,7 @@ public class MembreDaoImpl implements MembreDao{
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Membre;";
 	private static final String UPDATE_QUERY = "UPDATE Membre SET nom=?, prenom=?, adresse=?, email=?, telephone=?, abonnement=? WHERE id=?;";
 	private static final String DELETE_QUERY = "DELETE FROM Membre WHERE id=?;";
+	private static final String COUNT_QUERY = "SELECT COUNT(id) AS count FROM Membre";
 
 	@Override
 	public int create(String nom, String prenom, String adresse, String email, String telephone) throws DaoException {
@@ -75,7 +77,7 @@ public class MembreDaoImpl implements MembreDao{
 			}
 		}
 		return id;
-	} //OK
+	} 
 
 	@Override
 	public Membre getById(int id) throws DaoException {
@@ -100,7 +102,7 @@ public class MembreDaoImpl implements MembreDao{
 			
 			System.out.println("GET: " + membre);
 		} catch (SQLException e) {
-			throw new DaoException("Probl�me lors de la r�cup�ration du membre: id=" + id, e);
+			throw new DaoException("Probleme lors de la recuperation du membre: id=" + id, e);
 		} finally {
 			try {
 				res.close();
@@ -119,42 +121,45 @@ public class MembreDaoImpl implements MembreDao{
 			}
 		}
 		return membre;
-	} //OK
+	} // ok
 
 	@Override
-	public List<Film> getFilms() throws DaoException {
-		List<Film> films = new ArrayList<>();
+	public List<Membre> getList() throws DaoException {
+		List<Membre> membres = new ArrayList<>();
 		
 		try (Connection connection = EstablishConnection.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_QUERY);
 			 ResultSet res = preparedStatement.executeQuery();
 				){
 			while(res.next()) {
-				Film f = new Film(res.getInt("id"), res.getString("titre"), res.getString("realisateur"));
-				films.add(f);
+				Membre m = new Membre(res.getInt("id"), res.getString("nom"), res.getString("prenom"), res.getString("adresse"), res.getString("email"), res.getString("telephone"));
+				membres.add(m);
 			}
-			System.out.println("GET: " + films);
+			System.out.println("GET: " + membres);
 		} catch (SQLException e) {
-			throw new DaoException("Probl�me lors de la r�cup�ration de la liste des films", e);
+			throw new DaoException("Problème lors de la récupération de la liste des membres", e);
 		}
-		return films;
+		return membres;
 	}
 
 	@Override
-	public int update(Film film) throws DaoException {
+	public void update(Membre membre) throws DaoException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-			preparedStatement.setString(1, film.getTitre());
-			preparedStatement.setString(2, film.getRealisateur());
-			preparedStatement.setInt(3, film.getId());
+			preparedStatement.setString(1, membre.getNom());
+			preparedStatement.setString(2, membre.getPrenom());
+			preparedStatement.setString(3, membre.getEmail());
+			preparedStatement.setString(4, membre.getAdresse());
+			preparedStatement.setString(5, membre.getTelephone());
+			preparedStatement.setInt(6, membre.getId());
 			preparedStatement.executeUpdate();
 
-			System.out.println("UPDATE: " + film);
+			System.out.println("UPDATE: " + membre);
 		} catch (SQLException e) {
-			throw new DaoException("Probl�me lors de la mise � jour du film: " + film, e);
+			throw new DaoException("Probleme lors de la mise à jour du membre: " + membre, e);
 		} finally {
 			try {
 				preparedStatement.close();
@@ -167,23 +172,23 @@ public class MembreDaoImpl implements MembreDao{
 				e.printStackTrace();
 			}
 		}
-		return film.getId();
-	}
+		// return membre.getId();
+	}//ok
 
 	@Override
-	public int delete(Film film) throws DaoException {
+	public void delete(int id) throws DaoException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(DELETE_QUERY);
-			preparedStatement.setInt(1, film.getId());
+			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.close();
-			System.out.println("DELETE: " + film);
+			System.out.println("DELETE: " + id);
 		} catch (SQLException e) {
-			throw new DaoException("Probl�me lors de la suppression du film: " + film, e);
+			throw new DaoException("Problème lors de la suppression du membre: " + id, e);
 		}  finally {
 			try {
 				preparedStatement.close();
@@ -196,6 +201,22 @@ public class MembreDaoImpl implements MembreDao{
 				e.printStackTrace();
 			}
 		}
-		return film.getId();
+		// return membre.getId();
 	}
-}
+
+	@Override
+	public int count() throws DaoException {
+        int compteur;
+		
+		try (Connection connection = EstablishConnection.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(COUNT_QUERY);
+			 ResultSet res = preparedStatement.executeQuery();
+				){
+			compteur = res.getInt(1);
+			System.out.println("NUMBER: " + compteur);
+		} catch (SQLException e) {
+			throw new DaoException("Problème lors de la récupération du nombre de membres", e);
+		}
+		return compteur;
+	}
+} //ok
