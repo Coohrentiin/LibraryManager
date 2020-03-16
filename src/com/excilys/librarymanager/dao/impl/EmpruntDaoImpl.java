@@ -37,8 +37,15 @@ public class EmpruntDaoImpl implements EmpruntDao{
     private static final String COUNT_QUERY = "SELECT COUNT(id) AS count FROM emprunt";
     private static final String SELECT_CURRENT = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL";
 
+	/**
+	* Methode pour creer un emprunt à partir de:
+	* l'identifiant du membre qui emprunte
+	* l'identifiant du livre enprunté
+	* la date de retour du livre
+	* @return identifiant de l'emprunt
+	*/
     @Override
-	public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
+	public int create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
         Emprunt empruntToAdd = new Emprunt(idMembre, idLivre, dateEmprunt);
 		ResultSet res = null;
 		Connection connection = null;
@@ -79,8 +86,13 @@ public class EmpruntDaoImpl implements EmpruntDao{
 				e.printStackTrace();
 			}
 		}
+		return(id);
 	}
 
+	/**
+	* Methode pour récuperer un emprunt par son identifiant
+	* @return l'objet Emprunt correspondant à l'identifiant
+	*/
 	@Override
 	public Emprunt getById(int id) throws DaoException {
 		Emprunt emprunt = new Emprunt();
@@ -122,7 +134,11 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		}
 		return emprunt;
     }
-    
+	
+	/**
+	* Methode pour récuperer la liste des emprunt en cours
+	* @return liste d'objet emprunt de la BDD
+	*/
     @Override
 	public List<Emprunt> getList() throws DaoException {
 		List<Emprunt> emprunts = new ArrayList<>();
@@ -160,6 +176,10 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		return emprunts;
     }
 
+	/**
+	* Methode pour récuperer la liste des emprunt d'un membre par l'identifiant du membre
+	* @return liste d'objet emprunt d'un membre
+	*/
     public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
         List<Emprunt> emprunts = new ArrayList<>();
 		
@@ -196,6 +216,9 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		return emprunts;
     }
 
+	/**
+	* Methode pour mettre à jours les données d'un emprunt à partir d'un objet emprunt
+	*/
 	@Override
 	public void update(Emprunt emprunt) throws DaoException {
 		Connection connection = null;
@@ -228,7 +251,9 @@ public class EmpruntDaoImpl implements EmpruntDao{
 	}
 
 
-    
+	/**
+	* Methode pour obtenir le nombre d'emprunt en cours
+	*/
     @Override
 	public int count() throws DaoException {
         int compteur;

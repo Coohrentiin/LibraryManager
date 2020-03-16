@@ -31,7 +31,12 @@ public class LivreDaoImpl implements LivreDao{
     private static final String DELETE_QUERY = "DELETE FROM livre WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(id) AS count FROM livre";
 
-    @Override
+
+	@Override
+	/**
+	* Methode pour creer un livre
+	* @return l'identifiant du livre créé
+	*/
 	public int create(String titre, String auteur, String isbn) throws DaoException {
         Livre livreToAdd = new Livre(titre, auteur, isbn);
 		ResultSet res = null;
@@ -76,6 +81,10 @@ public class LivreDaoImpl implements LivreDao{
 		return id;
 	}
 
+	/**
+	* Methode pour récuperer un livre par son identifiant
+	* @return l'objet livre correspondant à l'identifiant
+	*/
 	@Override
 	public Livre getById(int id) throws DaoException {
 		Livre livre = new Livre();
@@ -116,7 +125,11 @@ public class LivreDaoImpl implements LivreDao{
 		}
 		return livre;
     }
-    
+	
+	/**
+	* Methode pour récuperer les livres de la bdd
+	* @return liste d'objet livre de la bdd
+	*/
     @Override
 	public List<Livre> getList() throws DaoException {
 		List<Livre> livres = new ArrayList<>();
@@ -136,6 +149,9 @@ public class LivreDaoImpl implements LivreDao{
 		return livres;
 	}
 
+	/**
+	* Methode pour updater un livre par un objet livre
+	*/
 	@Override
 	public void update(Livre livre) throws DaoException {
 		Connection connection = null;
@@ -145,8 +161,8 @@ public class LivreDaoImpl implements LivreDao{
 			preparedStatement = connection.prepareStatement(UPDATE_QUERY);
 			preparedStatement.setString(1, livre.getTitre());
 			preparedStatement.setString(2, livre.getAuteur());
-            preparedStatement.setInt(3, livre.getId());
-            preparedStatement.setString(4, livre.getIsbn());
+			preparedStatement.setString(3, livre.getIsbn());
+            preparedStatement.setInt(4, livre.getId());
 			preparedStatement.executeUpdate();
 
 			System.out.println("UPDATE: " + livre);
@@ -166,6 +182,9 @@ public class LivreDaoImpl implements LivreDao{
 		}
 	}
 
+	/**
+	* Methode pour supprimer un livre par son identifiant
+	*/
 	@Override
 	public void delete(int id) throws DaoException {
 		Connection connection = null;
@@ -193,7 +212,11 @@ public class LivreDaoImpl implements LivreDao{
 			}
 		}
     }
-    
+ 
+	/**
+	* Methode obtenir le nombre de livres dans la BDD
+	* @return nombre entier de livres de la bdd
+	*/
     @Override
 	public int count() throws DaoException {
         int compteur;
