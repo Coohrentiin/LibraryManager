@@ -40,7 +40,7 @@ public class LivreServiceImpl implements LivreService {
             i = livreDao.create(titre, auteur, isbn);
         } catch (DaoException e1) {
             System.out.println(e1.getMessage());
-            throw new ServiceException("Probl�me lors de la creation du film: " + livre, e1);
+            throw new ServiceException("Problème lors de la creation du film: " + livre, e1);
         }
         return i;
     }
