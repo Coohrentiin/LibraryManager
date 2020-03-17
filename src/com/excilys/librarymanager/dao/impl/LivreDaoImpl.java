@@ -46,11 +46,7 @@ public class LivreDaoImpl implements LivreDao{
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, titre);
-            preparedStatement.setString(2, auteur);
-            preparedStatement.setString(3, isbn);
-			preparedStatement.executeUpdate();
-			res = preparedStatement.getGeneratedKeys();
+			res = setResCreate(titre, auteur, isbn, preparedStatement);
 			if(res.next()){
 				id = res.getInt(1);				
 			}
@@ -58,27 +54,18 @@ public class LivreDaoImpl implements LivreDao{
 			System.out.println("CREATE: " + livreToAdd);
 		} catch (SQLException e) {
 			throw new DaoException("Probl�me lors de la cr�ation du film: " + livreToAdd, e);
-		} finally {
-			// Ici pour bien faire les choses on doit fermer les objets utilis�s dans
-			// des blocs s�par�s afin que les exceptions lev�es n'emp�chent pas la fermeture des autres !
-			// la logique est la m�me pour les autres m�thodes. Pour rappel, le bloc finally sera toujours ex�cut� !
-			try {
-				res.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return id;
+	}
+	private ResultSet setResCreate(String titre, String auteur, String isbn, PreparedStatement preparedStatement)
+			throws SQLException {
+		ResultSet res;
+		preparedStatement.setString(1, titre);
+		preparedStatement.setString(2, auteur);
+		preparedStatement.setString(3, isbn);
+		preparedStatement.executeUpdate();
+		res = preparedStatement.getGeneratedKeys();
+		return res;
 	}
 
 	/**
@@ -96,35 +83,22 @@ public class LivreDaoImpl implements LivreDao{
 			preparedStatement = connection.prepareStatement(SELECT_ONE_QUERY);
 			preparedStatement.setInt(1, id);
 			res = preparedStatement.executeQuery();
-			if(res.next()) {
-				livre.setId(res.getInt("id"));
-				livre.setTitre(res.getString("titre"));
-                livre.setAuteur(res.getString("auteur"));
-                livre.setIsbn(res.getString("isbn"));				
-			}
+			resGetById(livre, res);
 			
 			System.out.println("GET: " + livre);
 		} catch (SQLException e) {
 			throw new DaoException("Probl�me lors de la r�cup�ration du livre: id=" + id, e);
-		} finally {
-			try {
-				res.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return livre;
     }
+	private void resGetById(Livre livre, ResultSet res) throws SQLException {
+		if(res.next()) {
+			livre.setId(res.getInt("id"));
+			livre.setTitre(res.getString("titre"));
+		    livre.setAuteur(res.getString("auteur"));
+		    livre.setIsbn(res.getString("isbn"));				
+		}
+	}
 	
 	/**
 	* Methode pour récuperer les livres de la bdd
@@ -159,27 +133,19 @@ public class LivreDaoImpl implements LivreDao{
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-			preparedStatement.setString(1, livre.getTitre());
-			preparedStatement.setString(2, livre.getAuteur());
-			preparedStatement.setString(3, livre.getIsbn());
-            preparedStatement.setInt(4, livre.getId());
-			preparedStatement.executeUpdate();
+			resUpdate(livre, preparedStatement);
 
 			System.out.println("UPDATE: " + livre);
 		} catch (SQLException e) {
 			throw new DaoException("Probl�me lors de la mise � jour du livre: " + livre, e);
-		} finally {
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
+	}
+	private void resUpdate(Livre livre, PreparedStatement preparedStatement) throws SQLException {
+		preparedStatement.setString(1, livre.getTitre());
+		preparedStatement.setString(2, livre.getAuteur());
+		preparedStatement.setString(3, livre.getIsbn());
+		preparedStatement.setInt(4, livre.getId());
+		preparedStatement.executeUpdate();
 	}
 
 	/**

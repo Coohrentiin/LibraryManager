@@ -75,15 +75,7 @@ public class MembreDaoImpl implements MembreDao{
 			preparedStatement = connection.prepareStatement(SELECT_ONE_QUERY);
 			preparedStatement.setInt(1, id);
 			res = preparedStatement.executeQuery();
-			if(res.next()) {
-				membre.setId(res.getInt("id"));
-				membre.setNom(res.getString("nom"));
-				membre.setPrenom(res.getString("prenom"));
-				membre.setEmail(res.getString("email"));
-				membre.setAdresse(res.getString("adresse"));
-				membre.setTelephone(res.getString("telephone"));
-				membre.setAbonnement(Abonnement.valueOf(res.getString("abonnement")));		
-			}
+			resGetById(membre, res);
 			
 			System.out.println("GET: " + membre);
 		} catch (SQLException e) {
@@ -107,6 +99,17 @@ public class MembreDaoImpl implements MembreDao{
 		}
 		return membre;
 	} // ok
+	private void resGetById(Membre membre, ResultSet res) throws SQLException {
+		if(res.next()) {
+			membre.setId(res.getInt("id"));
+			membre.setNom(res.getString("nom"));
+			membre.setPrenom(res.getString("prenom"));
+			membre.setEmail(res.getString("email"));
+			membre.setAdresse(res.getString("adresse"));
+			membre.setTelephone(res.getString("telephone"));
+			membre.setAbonnement(Abonnement.valueOf(res.getString("abonnement")));		
+		}
+	}
 
 	@Override
 	public List<Membre> getList() throws DaoException {

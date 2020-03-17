@@ -38,8 +38,8 @@ public class DaoTest{
 			int id_emprunt = empruntImpl.create(id_laetitia, id_livre, date_retour);
 			Emprunt livreLaetitia=empruntImpl.getById(id_emprunt);
 
-			date_retour.plusDays(2);
-			livreLaetitia.setDateRetour(date_retour);
+			LocalDate date_emprunt_update= LocalDate.of(2020,03,18);
+			livreLaetitia.setDateEmprunt(date_emprunt_update);
 			empruntImpl.update(livreLaetitia);
 
 		} catch (Exception e) {

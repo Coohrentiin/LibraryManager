@@ -28,7 +28,8 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		return instance;
     }
     
-    private static final String CREATE_QUERY = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour) VALUES (?, ?, ?, ?)";
+	// private static final String CREATE_QUERY = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour) VALUES (?, ?, ?, ?)";
+	private static final String CREATE_QUERY = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt) VALUES (?, ?, ?)";
 	private static final String SELECT_ONE_QUERY = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE e.id = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC";
 	private static final String UPDATE_QUERY = "UPDATE emprunt SET idMembre = ?, idLivre = ?, dateEmprunt = ?, dateRetour = ? WHERE id = ?";
@@ -54,11 +55,7 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setInt(1, idMembre);
-            preparedStatement.setInt(2, idLivre);
-            preparedStatement.setDate(3, Date.valueOf(dateEmprunt) );
-			preparedStatement.executeUpdate();
-			res = preparedStatement.getGeneratedKeys();
+			res = setResCreate(idMembre, idLivre, dateEmprunt, preparedStatement);
 			if(res.next()){
 				id = res.getInt(1);				
 			}
@@ -66,27 +63,19 @@ public class EmpruntDaoImpl implements EmpruntDao{
 			System.out.println("CREATE: " + empruntToAdd);
 		} catch (SQLException e) {
 			throw new DaoException("Problème lors de la création de l'emprunt: " + empruntToAdd, e);
-		} finally {
-			// Ici pour bien faire les choses on doit fermer les objets utilis�s dans
-			// des blocs s�par�s afin que les exceptions lev�es n'emp�chent pas la fermeture des autres !
-			// la logique est la m�me pour les autres m�thodes. Pour rappel, le bloc finally sera toujours ex�cut� !
-			try {
-				res.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return(id);
+	}
+
+	private ResultSet setResCreate(int idMembre, int idLivre, LocalDate dateEmprunt, PreparedStatement preparedStatement)
+			throws SQLException {
+		ResultSet res;
+		preparedStatement.setInt(1, idMembre);
+		preparedStatement.setInt(2, idLivre);
+		preparedStatement.setDate(3, Date.valueOf(dateEmprunt) );
+		preparedStatement.executeUpdate();
+		res = preparedStatement.getGeneratedKeys();
+		return res;
 	}
 
 	/**
@@ -104,36 +93,24 @@ public class EmpruntDaoImpl implements EmpruntDao{
 			preparedStatement = connection.prepareStatement(SELECT_ONE_QUERY);
 			preparedStatement.setInt(1, id);
 			res = preparedStatement.executeQuery();
-			if(res.next()) {
-				emprunt.setId(res.getInt("id"));
-				emprunt.setIdMembre(res.getInt("idMembre"));
-                emprunt.setIdLivre(res.getInt("idLivre"));
-                emprunt.setDateEmprunt(res.getDate( "dateEmprunt").toLocalDate() );
-                emprunt.setDateRetour(res.getDate("dateRetour").toLocalDate());	
-			}
-			
+			resGetById(emprunt, res);
 			System.out.println("GET: " + emprunt);
 		} catch (SQLException e) {
 			throw new DaoException("Problème lors de la récupération de l'emprunt: id=" + id, e);
-		} finally {
-			try {
-				res.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return emprunt;
     }
+	private void resGetById(Emprunt emprunt, ResultSet res) throws SQLException {
+		if(res.next()) {
+			emprunt.setId(res.getInt("id"));
+			emprunt.setIdMembre(res.getInt("idMembre"));
+		    emprunt.setIdLivre(res.getInt("idLivre"));
+			emprunt.setDateEmprunt(res.getDate( "dateEmprunt").toLocalDate() );
+			if (res.getDate("dateRetour")!=null){
+				emprunt.setDateRetour(res.getDate("dateRetour").toLocalDate());	
+			}
+		}
+	}
 	
 	/**
 	* Methode pour récuperer la liste des emprunt en cours
@@ -183,12 +160,13 @@ public class EmpruntDaoImpl implements EmpruntDao{
     public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
         List<Emprunt> emprunts = new ArrayList<>();
 		
-		try (Connection connection = EstablishConnection.getConnection();
+		try {
+			 Connection connection = EstablishConnection.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CURRENT_BY_MEMBRE);
+			 preparedStatement.setInt(1, idMembre);
 			 ResultSet res = preparedStatement.executeQuery();
-				){
-			while(res.next()) {
-				Emprunt p = new Emprunt(res.getInt("id"), res.getInt("idMembre"), res.getInt("idLivre"), res.getDate("dateEmprunt").toLocalDate(), res.getDate("dateRetour").toLocalDate());
+			 while(res.next()) {
+				Emprunt p = new Emprunt(res.getInt("id"), res.getInt("idMembre"), res.getInt("idLivre"), res.getDate("dateEmprunt").toLocalDate(), null);
 				emprunts.add(p);
 			}
 			System.out.println("GET: " + emprunts);
@@ -201,12 +179,13 @@ public class EmpruntDaoImpl implements EmpruntDao{
     public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException{
         List<Emprunt> emprunts = new ArrayList<>();
 		
-		try (Connection connection = EstablishConnection.getConnection();
+		try {
+			Connection connection = EstablishConnection.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CURRENT_BY_LIVRE);
+			 preparedStatement.setInt(1, idLivre);
 			 ResultSet res = preparedStatement.executeQuery();
-				){
-			while(res.next()) {
-				Emprunt p = new Emprunt(res.getInt("id"), res.getInt("idMembre"), res.getInt("idLivre"), res.getDate("dateEmprunt").toLocalDate(), res.getDate("dateRetour").toLocalDate());
+			 while(res.next()) {
+				Emprunt p = new Emprunt(res.getInt("id"), res.getInt("idMembre"), res.getInt("idLivre"), res.getDate("dateEmprunt").toLocalDate(), null);
 				emprunts.add(p);
 			}
 			System.out.println("GET: " + emprunts);
@@ -226,28 +205,24 @@ public class EmpruntDaoImpl implements EmpruntDao{
 		try {
 			connection = EstablishConnection.getConnection();
 			preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-			preparedStatement.setInt(1, emprunt.getId());
-			preparedStatement.setInt(2, emprunt.getIdMembre());
-            preparedStatement.setInt(3, emprunt.getIdLivre());
-            preparedStatement.setDate(4, Date.valueOf(emprunt.getDateEmprunt()));
-            preparedStatement.setDate(5, Date.valueOf(emprunt.getDateRetour()));
-			preparedStatement.executeUpdate();
+			resUpdate(emprunt, preparedStatement);
 
 			System.out.println("UPDATE: " + emprunt);
 		} catch (SQLException e) {
 			throw new DaoException("Problème lors de la mise à jour de l'emprunt: " + emprunt, e);
-		} finally {
-			try {
-				preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} 
+	}
+	private void resUpdate(Emprunt emprunt, PreparedStatement preparedStatement) throws SQLException {
+		preparedStatement.setInt(1, emprunt.getIdMembre());
+		preparedStatement.setInt(2, emprunt.getIdLivre());
+		preparedStatement.setDate(3, Date.valueOf(emprunt.getDateEmprunt()));
+		if(emprunt.getDateRetour()!=null){
+			preparedStatement.setDate(4, Date.valueOf(emprunt.getDateRetour()));
+		}else{
+			preparedStatement.setDate(4, null);
 		}
+		preparedStatement.setInt(5, emprunt.getId());
+		preparedStatement.executeUpdate();
 	}
 
 
