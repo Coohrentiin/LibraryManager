@@ -23,9 +23,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <!-- DONE : afficher le nombre de membres � la place de 12 -->
+              <!-- DONE : afficher le nombre de membres � la place de 12 
               <% nb_membres = (int) request.getAttribute("nb_membres"); %>
-              <h3><%= nb_membres %></h3>
+              <h3><%= nb_membres %></h3>-->
               <p>Membres</p>
             </div>
             <div class="icon">
@@ -37,9 +37,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <!-- DONE : afficher le nombre de livres � la place de 27 -->
+              <!-- DONE : afficher le nombre de livres � la place de 27 
               <% nb_livres = (int) request.getAttribute("nb_livres"); %>
-              <h3><%= nb_livres %></h3>
+              <h3><%= nb_livres %></h3> -->
               <p>Livres</p>
             </div>
             <div class="icon">
@@ -51,9 +51,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <!-- DONE : afficher le nombre d'emprunts � la place de 1515 -->
+              <!-- DONE : afficher le nombre d'emprunts � la place de 1515
               <% nb_emprunts = (int) request.getAttribute("nb_emprunts"); %>
-              <h3><%= nb_emprunts %></h3>
+              <h3><%= nb_emprunts %></h3>  -->
               <p>Emprunts</p>
             </div>
             <div class="icon">

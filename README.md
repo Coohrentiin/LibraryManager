@@ -8,5 +8,5 @@ Si cela ne fonctionne pas on peut tenter desepérement un:
 	mvn clean install tomcat:run
 
 Sur votre navigateur WEB, mettre dans la barre de recherche: 
-	localhost:8080/ProjetEnsta/
+	http://localhost:8080/LibraryManager/
 
