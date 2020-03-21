@@ -23,14 +23,13 @@ public class LivreDeleteServlet extends HttpServlet {
             request.setAttribute("ListeDeLivres", listeDeLivres);
             String id_s = request.getParameter("id");
             int id = Integer.parseInt(id_s);
-            livreService.delete(id);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("livre_delete.jsp");
-            dispatcher.forward(request, response);
- 
+            livreService.delete(id); 
         } catch (ServiceException e) {
             e.printStackTrace();
             throw new ServletException("probleme lors de la suppression d'un livre", e);
         }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("livre_delete.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override

@@ -23,7 +23,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>12</h3> <!-- TODO : afficher le nombre de membres à la place de 12 -->
+              <!-- DONE : afficher le nombre de membres ï¿½ la place de 12 -->
+              <% nb_membres = (int) request.getAttribute("nb_membres"); %>
+              <h3><%= nb_membres %></h3>
               <p>Membres</p>
             </div>
             <div class="icon">
@@ -35,7 +37,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>27</h3> <!-- TODO : afficher le nombre de livres à la place de 27 -->
+              <!-- DONE : afficher le nombre de livres ï¿½ la place de 27 -->
+              <% nb_livres = (int) request.getAttribute("nb_livres"); %>
+              <h3><%= nb_livres %></h3>
               <p>Livres</p>
             </div>
             <div class="icon">
@@ -47,7 +51,9 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1515</h3> <!-- TODO : afficher le nombre d'emprunts à la place de 1515 -->
+              <!-- DONE : afficher le nombre d'emprunts ï¿½ la place de 1515 -->
+              <% nb_emprunts = (int) request.getAttribute("nb_emprunts"); %>
+              <h3><%= nb_emprunts %></h3>
               <p>Emprunts</p>
             </div>
             <div class="icon">
@@ -69,17 +75,24 @@
                     </tr>
                 </thead>
                 <tbody id="results">
-                
-                    <tr>
-                        <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Prénom et nom du membre emprunteur</td>
-                        <td>Date de l'emprunt</td>
+                  <!--
+                    <% emprunts= (List) request.getAttribute("listEmprunt"); %>
+                    <c:forEach items="${emprunts}" var="emprunt">
+                      <% MembreService membreService=MembreServiceImpl.getInstance(); %>
+                      <% LivreService livreService=LivreServiceImpl.getInstance(); %>
+                      <% livre = (Livre) livreService.getById(emprunt.getIdLivre()); %>
+                      <% membre = (Membre) membreService.getById(emprunt.getIdMembre()); %>
+                      <tr>
+                        <td><%= livre.getTitre() %>, <em><%= livre.getAuteur() %></em></td>
+                        <td><%= membre.getNom() %>, <em><%= membre.getPrenom() %></em></td>
+                        <td><%= emprunt.getDateEmprunt() %></td>
                         <td>
                             <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
                         </td>
-                    </tr>
-                    
-                     <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
+                      </tr>
+                    </c:forEach> 
+                  -->
+                     <!-- DONE : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
                 </tbody>
             </table>
           </div>

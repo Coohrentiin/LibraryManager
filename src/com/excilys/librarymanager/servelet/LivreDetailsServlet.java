@@ -32,7 +32,7 @@ public class LivreDetailsServlet extends HttpServlet {
 				//TODO 
 				
 				Emprunt emprunt=emprunts.get(0);
-				request.setAttribute("titre", livre.getTitre());
+				request.setAttribute("emprunts", emprunt);
 			}
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());

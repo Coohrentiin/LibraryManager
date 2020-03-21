@@ -18,16 +18,19 @@ public class MembreDetailsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MembreService membreService = MembreServiceImpl.getInstance();
+		EmpruntService empruntService = EmpruntServiceImpl.getInstance();
 		int idMembre = Integer.parseInt(request.getParameter("id"));
 		Membre membre;
 		try {
 			membre = membreService.getById(idMembre);
+			request.setAttribute("id", idMembre);
 			request.setAttribute("nom", membre.getNom());
 			request.setAttribute("prenom", membre.getPrenom());
             request.setAttribute("adresse", membre.getAdresse());
             request.setAttribute("email", membre.getEmail());
 			request.setAttribute("telephone", membre.getTelephone());
 			request.setAttribute("abonnement", membre.getAbonnement());
+			request.setAttribute("emprunts", empruntService.getListCurrentByMembre(idMembre));
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
 			membre=new Membre();

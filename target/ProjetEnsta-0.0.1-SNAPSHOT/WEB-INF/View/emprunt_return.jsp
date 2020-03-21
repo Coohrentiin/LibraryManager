@@ -21,16 +21,47 @@
       </div>
       <div class="row">
       <div class="container">
-        <h5>Sélectionnez le livre à retourner</h5>
+        <h5>SÃ©lectionnez le livre Ã  retourner</h5>
         <div class="row">
 	      <form action="/LibraryManager/emprunt_return" method="post" class="col s12">
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <select id="id" name="id" class="browser-default">
 	              <option value="" disabled selected>---</option>
-                  <!-- TODO : parcourir la liste des emprunts non rendus et afficher autant d'options que nécessaire, sur la base de l'exemple ci-dessous -->
-                  <!-- TODO : si l'attribut id existe, l'option correspondante devra être sélectionnée par défaut (ajouter l'attribut selected dans la balise <option>) -->
-                  <option value="idDeLEmprunt">"Titre du livre", emprunté par Prénom et nom du membre emprunteur</option>
+                  <!-- DONE : parcourir la liste des emprunts non rendus et afficher autant d'options que nÃ©cessaire, sur la base de l'exemple ci-dessous -->
+                    <!-- DONE : si l'attribut id existe, l'option correspondante devra Ãªtre sÃ©lectionnÃ©e par dÃ©faut (ajouter l'attribut selected dans la balise <option>) -->
+                    <% emprunts= (List) request.getAttribute("listeEmprunts"); %>
+                    <c:forEach items="${emprunts}" var="emprunt">
+                      <tr>
+                        <% livreId = (int) emprunt.getIdLivre() %>
+                        <% membreId = (int) emprunt.getIdmembre() %>
+                        <% demprunt = emprunt.getDateEmprunt() %>
+    
+                        <% MembreService membreService=MembreServiceImpl.getInstance(); %>
+                        <% LivreService livreService=LivreServiceImpl.getInstance(); %>
+                        <% livre = (Livre) livreService.getById(livreId); %>
+                        <% membre = (Membre) membreService.getById(membreId); %>
+                        <td><%=livre.getTitre()%>, <em><%=livre.getAuteur%></em></td>
+                        <td><%=membre.getNom%> <%=membre.getPrenom%></td>
+                        <td><%=demprunt%></td>
+                        <c:if test=${emprunt.getDateRetour()==null}>
+                          <td>
+                            <a href="emprunt_return?id=idDeLEmprunt">
+                              <ion-icon class="table-item" name="log-in">
+                            </a>
+                          </td>
+                        </c:if>
+                        <c:if test=${emprunt.id!=null}>
+                          <td>
+                           <option selected value="idDeLEmprunt">"Titre du livre", empruntï¿½ par Prï¿½nom et nom du membre emprunteur</option>
+                          </td>
+                        </c:if>
+                      </tr>
+                    </c:forEach>
+
+
+                
+                 
 	            </select>
 	          </div>
 	        </div>

@@ -25,25 +25,26 @@
             <thead>
               <tr>
                 <th>Nom</th>
-                <th>Prénom</th>
+                <th>Prï¿½nom</th>
                 <th class="hide-on-small-only">Adresse</th>
                 <th class="hide-on-small-only">E-mail</th>
-                <th class="hide-on-small-only">Téléphone</th>
-                <th>Détails</th>
+                <th class="hide-on-small-only">Tï¿½lï¿½phone</th>
+                <th>Dï¿½tails</th>
               </tr>
             </thead>
             <tbody>
-
+              <% membres= (List) request.getAttribute("membres"); %>
+              <c:forEach items="${membres}" var="membre">
               <tr>
-                <td>Nom du membre</td>
-                <td>Prénom du membre</td>
-                <td class="hide-on-small-only">Adresse du membre</td>
-                <td class="hide-on-small-only">E-mail du membre</td>
-                <td class="hide-on-small-only">Téléphone du membre</td>
+                <td><%=membre.getNom()%></td>
+                <td><%=membre.getNom()%></td>
+                <td class="hide-on-small-only"><%=membre.getAdresse()%></td>
+                <td class="hide-on-small-only"><%=membre.getEmail()%></td>
+                <td class="hide-on-small-only"><%=membre.getTelephone()%></td>
                 <td class="center"><a href="membre_details?id=idDuMembre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
               </tr>
-
-              <!-- TODO : parcourir la liste des membres et les afficher selon la structure d'exemple ci-dessus -->
+              </c:forEach>
+              <!-- DONE : parcourir la liste des membres et les afficher selon la structure d'exemple ci-dessus -->
             </tbody>
           </table>
         </div>
