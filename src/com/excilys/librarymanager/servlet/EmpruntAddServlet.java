@@ -26,13 +26,14 @@ public class EmpruntAddServlet extends HttpServlet {
 			List<Livre> listeDeLivres = livreService.getListDispo();
             request.setAttribute("ListeDeMembres", listeDeMembres);
 			request.setAttribute("ListeDeLivres", listeDeLivres);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("emprunt_add.jsp");
-            dispatcher.forward(request, response);
+
  
         } catch (ServiceException e) {
             e.printStackTrace();
             throw new ServletException(e);
         }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("emprunt_add.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
