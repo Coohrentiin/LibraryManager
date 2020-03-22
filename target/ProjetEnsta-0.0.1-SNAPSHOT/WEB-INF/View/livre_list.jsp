@@ -27,29 +27,20 @@
                         <th>Titre</th>
                         <th>Auteur</th>
                         <th>Code ISBN 13</th>
-                        <th>D&eacute;tails</th>
+                        <th>D�tails</th>
                     </tr>
                 </thead>
                 <tbody>
-                
-                  <%--
+                  <% livres= (List) request.getAttribute("livres"); %>
+                  <c:forEach items="${livres}" var="livre">
                     <tr>
-                        <td>Titre du livre</td>
-                        <td>Nom de l'auteur</td>
-                        <td>ISBN du livre</td>
-                        <td class="center"><a href="livre_details?id=idDuLivre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
+                      <td><%= livre.getTitre() %></td>
+                      <td><%= livre.getAuteur() %></td>
+                      <td><%= livre.getISBN() %></td>
+                      <td class="center"><a href="livre_details?id=idDuLivre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
                     </tr>
-                  --%>
-                    <c:if test= "${not empty livres}">
-                    <c:forEach items="${livres}" var="l">
-                    	<tr>
-                            <td> <c:out value = "${l.getTitre()}"/> </td>
-                            <td> <c:out value = "${l.getAuteur()}"/> </td>
-                            <td> <c:out value = "${l.getIsbn()}"/> </td>
-                            <td class="center"><a href="livre_details?id=<c:out value = "${l.getId()}"/>"><ion-icon class="details" name="information-circle-outline"></ion-icon></a> </td>
-                      </tr>
-                    </c:forEach>
-                    </c:if>
+                  </c:forEach>                   
+                  <!-- DONE : parcourir la liste des livres et les afficher selon la structure d'exemple ci-dessus -->
                 </tbody>
             </table>
           </div>

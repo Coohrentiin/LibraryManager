@@ -1,5 +1,3 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +22,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><c:out value="${nbMembres}"></c:out></h3>
+              <h3><c:out value="${nb_membres}"></c:out></h3>
               <p>Membres</p>
             </div>
             <div class="icon">
@@ -36,7 +34,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><c:out value="${nbLivres}"></c:out></h3>
+              <h3><c:out value="${nb_livres}"></c:out></h3>
               <p>Livres</p>
             </div>
             <div class="icon">
@@ -48,7 +46,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><c:out value="${nbEmprunts}"></c:out></h3>
+              <h3><c:out value="${nb_emprunts}"></c:out></h3>
               <p>Emprunts</p>
             </div>
             <div class="icon">
@@ -71,21 +69,23 @@
                 </thead>
                 <tbody id="results">
                 
-                    <tr>
+                    <!--<tr>
                         <td>Titre du livre, <em> Nom de l'auteur</em></td>
                         <td>Pr&eacute;nom et nom du membre emprunteur</td>
                         <td>Date de l'emprunt</td>
                         <td>
                             <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
                         </td>
-                    </tr>
+                    </tr>-->
                     <c:if test= "${not empty emprunts}">
                     <c:forEach items="${emprunts}" var="e">
                     	<tr>
                             <td> <c:out value = "${e.getLivre().getTitre()}"/>, <em><c:out value = "${e.getLivre().getAuteur()}"/></em> </td>
                             <td> <c:out value = "${e.getMembre().getPrenom()}"/>, <c:out value = "${e.getMembre().getNom()}"/> </td>
                             <td> <c:out value = "${e.getDateEmprunt()}"/> </td>
-                            <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
+                            <td>
+                              <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
+                          </td>
                       </tr>
                     </c:forEach>
                     </c:if>

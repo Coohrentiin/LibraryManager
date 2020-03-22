@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>LibraryManager</display-name>
+  
+  
+  
+  
   <servlet>
     <servlet-name>DashboardServlet</servlet-name>
     <servlet-class>com.excilys.librarymanager.servlet.DashboardServlet</servlet-class>
@@ -72,6 +76,30 @@
   <servlet-mapping>
     <servlet-name>MembreListServlet</servlet-name>
     <url-pattern>/membre_list</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MembreAddServlet</servlet-name>
+    <servlet-class>com.excilys.librarymanager.servlet.MembreAddServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MembreAddServlet</servlet-name>
+    <url-pattern>/membre_add</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MembreDeleteServlet</servlet-name>
+    <servlet-class>com.excilys.librarymanager.servlet.MembreDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MembreDeleteServlet</servlet-name>
+    <url-pattern>/membre_delete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MembreDetailsServlet</servlet-name>
+    <servlet-class>com.excilys.librarymanager.servlet.MembreDetailsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MembreDetailsServlet</servlet-name>
+    <url-pattern>/membre_details</url-pattern>
   </servlet-mapping>
   
   <error-page>
