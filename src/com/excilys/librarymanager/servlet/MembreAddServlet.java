@@ -27,9 +27,10 @@ public class MembreAddServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String telephone = request.getParameter("telephone");
 		
-		Membre membre;
+		Membre membre = new Membre();
+		int idMembre = 0;
         try {
-			int idMembre = membreService.create(nom,prenom,adresse,email,telephone);
+			idMembre = membreService.create(nom,prenom,adresse,email,telephone);
 			membre = membreService.getById(idMembre);
  
         } catch (ServiceException e) {
@@ -38,7 +39,7 @@ public class MembreAddServlet extends HttpServlet {
 			membre = new Membre();
             throw new ServletException("Problème lors de l'ajout d'un nouveau membre SERVLET",e);
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("membre_add.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/membre_add.jsp");
         dispatcher.forward(request, response);
     }
 

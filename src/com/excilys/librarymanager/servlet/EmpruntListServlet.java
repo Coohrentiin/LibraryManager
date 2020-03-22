@@ -21,6 +21,7 @@ public class EmpruntListServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String inputShow = request.getParameter("show");
+		
 		if(inputShow=="all"){
 			EmpruntService empruntService = EmpruntServiceImpl.getInstance();
 			List<Emprunt> emprunts = new ArrayList<>();
@@ -31,7 +32,7 @@ public class EmpruntListServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			request.setAttribute("emprunts", emprunts);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/emprunt_list.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/emprunt_list.jsp");
 			dispatcher.forward(request, response);
 		}
 		else{
@@ -44,7 +45,7 @@ public class EmpruntListServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			request.setAttribute("emprunts", emprunts);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/emprunt_list.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/emprunt_list.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

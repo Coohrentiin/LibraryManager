@@ -1,6 +1,7 @@
 package com.excilys.librarymanager.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,18 +22,18 @@ public class EmpruntAddServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MembreService membreService=MembreServiceImpl.getInstance();
 		LivreService livreService=LivreServiceImpl.getInstance();
+		List<Membre> listeDeMembres= new ArrayList<>();
+		List<Livre> listeDeLivres= new ArrayList<>();
         try {
-			List<Membre> listeDeMembres = membreService.getListMembreEmpruntPossible();
-			List<Livre> listeDeLivres = livreService.getListDispo();
-            request.setAttribute("ListeDeMembres", listeDeMembres);
-			request.setAttribute("ListeDeLivres", listeDeLivres);
-
- 
+			listeDeMembres = membreService.getListMembreEmpruntPossible();
+			listeDeLivres = livreService.getListDispo();
         } catch (ServiceException e) {
             e.printStackTrace();
             throw new ServletException(e);
-        }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("emprunt_add.jsp");
+		}
+		request.setAttribute("ListeDeMembres", listeDeMembres);
+		request.setAttribute("ListeDeLivres", listeDeLivres);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/dashboard.jsp");
         dispatcher.forward(request, response);
     }
 

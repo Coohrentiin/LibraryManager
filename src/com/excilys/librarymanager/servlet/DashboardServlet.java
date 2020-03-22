@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.librarymanager.exception.ServiceException;
-import com.excilys.librarymanager.model.Emprunt;
+import com.excilys.librarymanager.exception.*;
+import com.excilys.librarymanager.model.*;
 import com.excilys.librarymanager.services.impl.*;
 import com.excilys.librarymanager.services.*;
 

@@ -25,8 +25,9 @@ public class LivreAddServlet extends HttpServlet {
 		String auteur = request.getParameter("auteur");
 		String isbn = request.getParameter("isbn");
 		Livre livre;
+		int idLivre=0;
         try {
-			int idLivre = livreService.create(titre, auteur, isbn);
+			idLivre = livreService.create(titre, auteur, isbn);
 			livre = livreService.getById(idLivre);
  
         } catch (ServiceException e) {
@@ -35,7 +36,7 @@ public class LivreAddServlet extends HttpServlet {
 			livre = new Livre();
             throw new ServletException("Problème lors de l'ajout d'un nouveau livre SERVLET",e);
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("livre_add.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_add.jsp");
         dispatcher.forward(request, response);
     }
 

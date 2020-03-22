@@ -19,16 +19,17 @@ public class EmpruntReturnServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EmpruntService empruntService=EmpruntServiceImpl.getInstance();
+        List<Emprunt> listeEmprunts=new ArrayList<>();
         try {
-			List<Emprunt> listeEmprunts = empruntService.getListCurrent();
-            request.setAttribute("listeEmprunts",  listeEmprunts);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("emprunt_return.jsp");
-            dispatcher.forward(request, response);
+			listeEmprunts = empruntService.getListCurrent();
  
         } catch (ServiceException e) {
             e.printStackTrace();
             throw new ServletException("Problème lors de l'emprunt return servlet",e);
         }
+        request.setAttribute("listeEmprunts",  listeEmprunts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/emprunt_return.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
