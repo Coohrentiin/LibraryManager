@@ -21,16 +21,16 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du livre n°${livre.id}</h5> <!-- DONE : afficher l'id du livre au lieu de 42 -->
+      <h5>Suppression du livre n&ordm;<c:out value="${idLivre}"/></h5> <!-- TODO : afficher l'id du livre au lieu de 42 -->
         <div class="row">
-          <p>Êtes-vous sûr de vouloir supprimer le livre ${livre.titre} de ${livre.auteur} (code ${livre.isbn}) ?</p> <!-- DONE : compl�ter les trois informations ci-contre -->
+          <p>&Ecirc;tes-vous s&ucirc;r de vouloir supprimer le livre <c:out value="${livre.getTitre()}"/> de <c:out value="${livre.getAuteur()}"/>(code <c:out value="${livre.getIsbn()}"/>) ?</p> <!-- TODO : compl�ter les trois informations ci-contre -->
 	      <form action="/LibraryManager/livre_delete" method="post" class="col s12">
-            <input type="hidden" value="${livre.id}" name="id"> <!-- DONE : remplacer idDuLivre par l'id du livre -->
+            <input type="hidden" value=<c:out value="${idLivre}"/> name="id"> <!-- TODO : remplacer idDuLivre par l'id du livre -->
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/livre_details?id=${livre.id}">Annuler</a> <!-- DONE : remplacer idDuLivre par l'id du livre -->
+	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/livre_details?id=<c:out value="${idLivre}"/>">Annuler</a> <!-- TODO : remplacer idDuLivre par l'id du livre -->
 	        </div>
 	      </form>
 	    </div>	    
