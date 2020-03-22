@@ -65,11 +65,11 @@ public class DashboardServlet extends HttpServlet {
 		int nb_emprunts = 0;
 		List<Emprunt> listEmprunts = new ArrayList<>();
 		try {
-//			nb_membres = membreService.count();
-//			nb_livres = livreService.count();
-//			nb_emprunts = empruntService.count();
-//			listEmprunts = empruntService.getListCurrent();
-		} catch (Exception e) {  //service exception
+			nb_membres = membreService.count();
+			nb_livres = livreService.count();
+			nb_emprunts = empruntService.count();
+			listEmprunts = empruntService.getListCurrent();
+		} catch (ServiceException e) {  //service exception
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}

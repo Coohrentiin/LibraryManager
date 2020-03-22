@@ -25,37 +25,26 @@
             <thead>
               <tr>
                 <th>Nom</th>
-                <th>Pr&eacute;nom</th>
+                <th>Pr�nom</th>
                 <th class="hide-on-small-only">Adresse</th>
                 <th class="hide-on-small-only">E-mail</th>
-                <th class="hide-on-small-only">T&eacute;l&eacute;phone</th>
-                <th>D&eacute;tails</th>
+                <th class="hide-on-small-only">T�l�phone</th>
+                <th>D�tails</th>
               </tr>
             </thead>
             <tbody>
-
-			<%-- 
+              <% membres= (List) request.getAttribute("membres"); %>
+              <c:forEach items="${membres}" var="membre">
               <tr>
-                <td>Nom du membre</td>
-                <td>Pr&eacute;nom du membre</td>
-                <td class="hide-on-small-only">Adresse du membre</td>
-                <td class="hide-on-small-only">E-mail du membre</td>
-                <td class="hide-on-small-only">T&eacute;l&eacute;phone du membre</td>
+                <td><%=membre.getNom()%></td>
+                <td><%=membre.getNom()%></td>
+                <td class="hide-on-small-only"><%=membre.getAdresse()%></td>
+                <td class="hide-on-small-only"><%=membre.getEmail()%></td>
+                <td class="hide-on-small-only"><%=membre.getTelephone()%></td>
                 <td class="center"><a href="membre_details?id=idDuMembre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
               </tr>
-            --%>
-              <c:if test= "${not empty membres}">
-                <c:forEach items="${membres}" var="m">
-                  <tr>
-                        <td> <c:out value = "${m.getNom()}"/> </td>
-                        <td> <c:out value = "${m.getPrenom()}"/> </td>
-                        <td> <c:out value = "${m.getAdress()}"/> </td>
-                        <td> <c:out value = "${m.getEmail()}"/> </td>
-                        <td> <c:out value = "${m.getTelephone()}"/> </td>
-                        <td class="center"><a href="membre_details?id=idDuMembre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
-                  </tr>
-                </c:forEach>
-              </c:if>
+              </c:forEach>
+              <!-- DONE : parcourir la liste des membres et les afficher selon la structure d'exemple ci-dessus -->
             </tbody>
           </table>
         </div>

@@ -25,7 +25,7 @@ public class LivreListServlet extends HttpServlet {
         LivreService livreService = LivreServiceImpl.getInstance();
         List<Livre> livres = new ArrayList<>();
         try {
-//            livres = livreService.getList();
+            livres = livreService.getList();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
