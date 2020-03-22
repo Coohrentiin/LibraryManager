@@ -34,7 +34,7 @@ public class LivreDetailsServlet extends HttpServlet {
 //				Emprunt emprunt=emprunts.get(0);
 //				request.setAttribute("emprunts", emprunt);
 //			}
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			livre=new Livre();
 			e.printStackTrace();
