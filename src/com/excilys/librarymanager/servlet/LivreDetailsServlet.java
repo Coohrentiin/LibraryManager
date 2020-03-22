@@ -16,30 +16,52 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class LivreDetailsServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LivreService livreService = LivreServiceImpl.getInstance();
-		EmpruntService empruntService = EmpruntServiceImpl.getInstance();
-		int idLivre = Integer.parseInt(request.getParameter("livre.id"));
-		Livre livre;
+		LivreServiceImpl livreService = LivreServiceImpl.getInstance();
+		EmpruntServiceImpl empruntService = EmpruntServiceImpl.getInstance();
+		int idLivre = Integer.parseInt(request.getParameter("id"));
+		Livre livre = new Livre();
+		String titreLivre = "";
+		String auteurLivre = "";
+		String isbnLivre = "";
 		List<Emprunt> emprunts = new ArrayList<>();
 		try {
 			livre = livreService.getById(idLivre);
+			titreLivre = livre.getTitre();
+			auteurLivre = livre.getAuteur();
+			isbnLivre = livre.getIsbn();
 			emprunts = empruntService.getListCurrentByLivre(idLivre);
-		} catch (Exception e) {
+		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
-			livre=new Livre();
-			e.printStackTrace();
 		}
-		request.setAttribute("titre", livre.getTitre());
-		request.setAttribute("auteur", livre.getAuteur());
-		request.setAttribute("isbn", livre.getIsbn());
-		if(emprunts.size()!=0){
-			//TODO if trouble
-			Emprunt emprunt=emprunts.get(0);
-			request.setAttribute("emprunts", emprunt);
-		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/livre_detail.jsp");
+		request.setAttribute("idLivre", idLivre);
+		request.setAttribute("titreLivre", titreLivre);
+		request.setAttribute("auteurLivre", auteurLivre);
+		request.setAttribute("isbnLivre", isbnLivre);
+		request.setAttribute("emprunts", emprunts);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_details.jsp");
 		dispatcher.forward(request, response);
-	}	
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LivreServiceImpl livreService = LivreServiceImpl.getInstance();
+		int idLivre = Integer.parseInt(request.getParameter("id"));
+		try {
+			String titre = request.getParameter("titre");
+			String auteur = request.getParameter("auteur");
+			String isbn = request.getParameter("isbn");
+			Livre livre = new Livre(idLivre, titre, auteur, isbn);
+			livreService.update(livre);
+			response.sendRedirect(request.getContextPath() + "/livre_details");
+		} catch (IOException e2) {
+			System.out.println(e2.getMessage());
+		} catch (ServiceException e3) {
+			System.out.println(e3.getMessage());
+			throw new ServletException ("Erreur lors de la mise à jour du livre");
+		}
+	}
 }
