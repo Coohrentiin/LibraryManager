@@ -23,17 +23,17 @@ public class LivreDetailsServlet extends HttpServlet {
 		int idLivre = Integer.parseInt(request.getParameter("livre.id"));
 		Livre livre;
 		try {
-			livre = livreService.getById(idLivre);
-			request.setAttribute("titre", livre.getTitre());
-			request.setAttribute("auteur", livre.getAuteur());
-			request.setAttribute("isbn", livre.getIsbn());
-			List<Emprunt> emprunts = empruntService.getListCurrentByLivre(idLivre);
-			if(emprunts.size()!=0){
-				//TODO 
-				
-				Emprunt emprunt=emprunts.get(0);
-				request.setAttribute("emprunts", emprunt);
-			}
+//			livre = livreService.getById(idLivre);
+//			request.setAttribute("titre", livre.getTitre());
+//			request.setAttribute("auteur", livre.getAuteur());
+//			request.setAttribute("isbn", livre.getIsbn());
+//			List<Emprunt> emprunts = empruntService.getListCurrentByLivre(idLivre);
+//			if(emprunts.size()!=0){
+//				//TODO 
+//				
+//				Emprunt emprunt=emprunts.get(0);
+//				request.setAttribute("emprunts", emprunt);
+//			}
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
 			livre=new Livre();

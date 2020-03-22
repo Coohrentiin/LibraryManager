@@ -25,13 +25,13 @@ public class LivreListServlet extends HttpServlet {
         LivreService livreService = LivreServiceImpl.getInstance();
         List<Livre> livres = new ArrayList<>();
         try {
-            livres = livreService.getList();
-        } catch (ServiceException e) {
+//            livres = livreService.getList();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
         request.setAttribute("livres", livres);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/livre_list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_list.jsp");
         dispatcher.forward(request, response);
     }
 
