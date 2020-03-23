@@ -3,6 +3,7 @@ Projet de gestionnaire de location en librairie de Laetitia Chaillou et Corentin
 
 Ce projet est guidé par l'équipe pédagogique dans le cadre d'un enseignement au sein de l'Ensta Paris.
 
+![Dashboard](/image_readme/image_dashboard.png "Dashboard")
 ## Implementation
 #### Language 
 Ce projet est essentiellement un projet en code JAVA. Afin de réaliser une IHM sur serveur nous avons également utilisé des ressources XML et JSP.
@@ -46,6 +47,11 @@ Vous arriverez directement sur la page d'accueil du projet.
 5. dans l'onglet "tomcat servers" de VSCode faire clique droit sur l'application disponible puis "open in browser"
 6. si une erreur 404 s'affiche, rafraichir la page jusqu'à obtenir l'affichage attendu
 
+## Navigation
+
+Afin de représenter la navigation au sein du serveur nous avons construit un diagramme d'utilisation: 
+
+![DiagrammeUtilisation](/image_readme/diagrame_utilisation.png "Diagramme d'utilisation")
 ## Avancement: 
 - Nous avons réalisé l'intégralité des exercices 1 à 4. 
 - Dans le dossier src/test vous trouverez les tests unitaires des exercices 1 à 3 qui permettent de tester: 
