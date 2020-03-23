@@ -1,7 +1,7 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-        Design © 2017 Farooq Designs. All rights reserved.
+        IN205-2020: Laetitia Chaillou et Corentin Soubeiran
       </div>
     </div>
   </footer>
