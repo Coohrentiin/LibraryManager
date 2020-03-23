@@ -1,16 +1,16 @@
 # LibraryManager
 Projet de gestionnaire de location en librairie de Laetitia Chaillou et Corentin Soubeiran dans le cadre du cours d'IN205 à l'Ensta Paris. Mars 2020
 
-*Ce projet est guidé par l'équipe pédagogique dans le cadre d'un enseignement au sein de l'Ensta Paris.*
+**Ce projet est guidé par l'équipe pédagogique dans le cadre d'un enseignement au sein de l'Ensta Paris.**
 
 ![Dashboard](/image_readme/image_dashboard.png "Dashboard")
 ## Implementation
 #### Language 
-Ce projet est essentiellement un projet en code *JAVA*. Afin de réaliser une IHM sur serveur nous avons également utilisé des ressources *XML* et *JSP*.
-Le serveur que nous avons utilisé est un serveur *Tomcat* (7 ou 8 suivant nos utilisation) le tout chapoté par *MAVEN*.
+Ce projet est essentiellement un projet en code **JAVA**. Afin de réaliser une IHM sur serveur nous avons également utilisé des ressources **XML** et **JSP**.
+Le serveur que nous avons utilisé est un serveur **Tomcat** (7 ou 8 suivant nos utilisation) le tout chapoté par **MAVEN**.
 
 #### IDE
-Afin d'executer notre code nous avons utilisé *Eclipse ou VScode* en fonction globalement des caprices d'Eclipse ou de notre configuration PC.
+Afin d'executer notre code nous avons utilisé **Eclipse ou VScode** en fonction globalement des caprices d'Eclipse ou de notre configuration PC.
 
 Ainsi ce code est fonctionnel sur Windows via Eclipse et sous Linux via Eclipse et VScode.
 
@@ -53,12 +53,12 @@ Afin de représenter la navigation au sein du serveur nous avons construit un di
 
 ![DiagrammeUtilisation](/image_readme/diagrame_utilisation.png "Diagramme d'utilisation")
 ## Avancement: 
-- Nous avons réalisé l'intégralité des *exercices 1 à 4.*
-- Dans le dossier src/test vous trouverez les *tests unitaires* des exercices 1 à 3 qui permettent de tester: 
+- Nous avons réalisé l'intégralité des **exercices 1 à 4.**
+- Dans le dossier src/test vous trouverez les **tests unitaires** des exercices 1 à 3 qui permettent de tester: 
 	- Nos classes model pour ModelTest.java
 	- Nos DAO pour DaoTest.java
 	- Nos services pour ServiceTest.java 
-- Nous avons généré la *Javadoc*, celle ci est disponible dans le dossier "doc" à la racine du projet.
+- Nous avons généré la **Javadoc**, celle ci est disponible dans le dossier "doc" à la racine du projet.
 
 Maleureusement lors du lancement du serveur la communication avec la DATAbase ne se fait pas correctement et les données ne se mettent pas à jour (Problème lors de la récupération de la liste des membres error : Database may be already in use: null. Possible solutions: close all other connection(s); use the server mode [90020-197]). 
 
