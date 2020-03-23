@@ -45,3 +45,10 @@ Vous arriverez directement sur la page d'accueil du projet.
 	- Nos services pour ServiceTest.java 
 
 Maleureusement lors du lancement du serseur la communication avec la DATAbase ne se fait pas correctement et les données ne mettent pas à jours. 
+
+## Conclusion:
+Ce projet est celon nous une bonne oportunité pour apprenhender les serveurs, la création d'un SGBD et d'une IHM. Néamoins nous regretons d'avoir eu énormement de difficulter lors de la mise en place. Malgrés les tutoriels détaillé des TD et de nombreuse recherhce de notre coté, beaucoup de choses étaient nouvelles pour nous (comme JSP, XML, tomcat, maven, Eclipse) et même nous somme content de connaitre un peu ces systèmes, ceux ci ont également été trés chronophage. 
+
+Malgrés notre assiduité pendant les TD, nous pensons que nous n'avons pas eu le temps de bien comprendre le TD4 sur la mise en place d'un serveur de Film pour appréhender plus sereinement ce projet d'une echelle bien plus conséquente. En effet nous pensons qu'avoir une semaine de plus lors du td Film nous aurait permis d'arriver avec une vision plus globale sur ce projet ci et avec des idées orienté pour le débuggage. 
+
+Finalement nous allons poursuivre les notions de cet enseignement au delà de se projet. Par exemple nous avons commencé à regarder le codage d'applications mobiles en java et les possibilité que nous pourrions avoir en utilisant les ressources de ce cours. Nous avons notamment vu que nous pourrions utiliser Android studio pour nous eviter/simplifier la partie XLM. 
