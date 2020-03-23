@@ -1,0 +1,10 @@
+com.excilys.librarymanager.dao
+com.excilys.librarymanager.dao.impl
+com.excilys.librarymanager.exception
+com.excilys.librarymanager.model
+com.excilys.librarymanager.persistence
+com.excilys.librarymanager.services
+com.excilys.librarymanager.services.impl
+com.excilys.librarymanager.servlet
+com.excilys.librarymanager.test
+com.excilys.librarymanager.utils
