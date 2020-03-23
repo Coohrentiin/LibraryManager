@@ -20,8 +20,8 @@ public class LivreDetailsServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LivreServiceImpl livreService = LivreServiceImpl.getInstance();
-		EmpruntServiceImpl empruntService = EmpruntServiceImpl.getInstance();
+		LivreService livreService = LivreServiceImpl.getInstance();
+		EmpruntService empruntService = EmpruntServiceImpl.getInstance();
 		int idLivre = Integer.parseInt(request.getParameter("id"));
 		Livre livre = new Livre();
 		String titreLivre = "";
@@ -48,7 +48,7 @@ public class LivreDetailsServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LivreServiceImpl livreService = LivreServiceImpl.getInstance();
+		LivreService livreService = LivreServiceImpl.getInstance();
 		int idLivre = Integer.parseInt(request.getParameter("id"));
 		try {
 			String titre = request.getParameter("titre");

@@ -1,4 +1,3 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 
@@ -31,22 +30,23 @@
                 <div class="input-field col s6">
                   <select id="idLivre" name="idLivre" class="browser-default">
                     <option value="" disabled selected>-- Livres --</option>
-                    <% livres = (List) request.getAttribute("ListeDeLivres"); %>
-                    <c:forEach items="${livres}" var="livre">
+                    <c:if test = "${not empty livres}">
+                      <c:forEach items="${livres}" var="l">
+                        <option value="${l.getId()}"> <c:out value = "${l.getTitre()}"/>, de <c:out value = "${l.getAuteur()}"/> </option>
+                      </c:forEach>
+                    </c:if>
                       <!-- DONE : parcourir la liste des livres disponibles et afficher autant d'options que n�cessaire, sur la base de l'exemple ci-dessous -->
-                      <option value="idDuLivre">${livre.titre}, de ${livre.auteur}</option>
-                    </c:forEach>
-
                   </select>
                 </div>
                 <div class="input-field col s6">
                   <select id="idMembre" name="idMembre" class="browser-default">
                     <option value="" disabled selected>-- Membres --</option>
-                    <% membres= (List) request.getAttribute("ListeDeMembres"); %>
-                    <c:forEach items="${membres}" var="membre">
+                    <c:if test = "${not empty membres}">
+                      <c:forEach items="${membres}" var="m">
+                        <option value ="${m.getId()}"> <c:out value = "${m.getPrenom()}"/> <c:out value = "${m.getNom()}"/> </option>
+                      </c:forEach>
+                    </c:if>
                       <!-- DONE : parcourir la liste des membres pouvant emprunter et afficher autant d'options que n�cessaire, sur la base de l'exemple ci-dessous -->
-                      <option value="idDuMembre">${membre.nom} et ${membre.prenom}</option>
-                    </c:forEach>
                   </select>
                 </div>
               </div>

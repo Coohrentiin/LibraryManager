@@ -30,7 +30,15 @@
 	              <option value="" disabled selected>---</option>
                   <!-- DONE : parcourir la liste des emprunts non rendus et afficher autant d'options que nécessaire, sur la base de l'exemple ci-dessous -->
                     <!-- DONE : si l'attribut id existe, l'option correspondante devra être sélectionnée par défaut (ajouter l'attribut selected dans la balise <option>) -->
-                    <% emprunts= (List) request.getAttribute("listeEmprunts"); %>
+                      <c:if test = "${not empty emprunts}">
+                        <c:forEach items="${emprunts}" var="e">
+                          <option value="${e.getId()}"> "<c:out value = "${e.getLivre().getTitre()}"/>", emprunt&eacute; par <c:out value = "${e.getMembre().getPrenom()}"/> <c:out value = "${e.getMembre().getNom()}"/> </option>
+                        </c:forEach>
+                      </c:if>
+                    
+                    
+                    
+                      <% emprunts= (List) request.getAttribute("listeEmprunts"); %>
                     <c:forEach items="${emprunts}" var="emprunt">
                       <tr>
                         <% livreId = (int) emprunt.getIdLivre() %>

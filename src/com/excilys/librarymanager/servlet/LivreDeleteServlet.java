@@ -1,8 +1,7 @@
 package com.excilys.librarymanager.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+
 import com.excilys.librarymanager.exception.ServiceException;
 import com.excilys.librarymanager.model.*;
 import com.excilys.librarymanager.services.*;
@@ -18,7 +17,7 @@ public class LivreDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LivreServiceImpl livreService = LivreServiceImpl.getInstance();
+		LivreService livreService = LivreServiceImpl.getInstance();
 		Livre livre = new Livre();
 		int idLivre = Integer.parseInt(request.getParameter("id"));
 		try {
@@ -36,7 +35,7 @@ public class LivreDeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			int idLivre = Integer.parseInt(request.getParameter("id"));
-			LivreServiceImpl livreService = LivreServiceImpl.getInstance();
+			LivreService livreService = LivreServiceImpl.getInstance();
 			livreService.delete(idLivre);
 			response.sendRedirect(request.getContextPath() + "/livre_list");
 		} catch (NumberFormatException e1) {

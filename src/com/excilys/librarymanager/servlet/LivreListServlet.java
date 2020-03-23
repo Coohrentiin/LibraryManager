@@ -15,13 +15,15 @@ import com.excilys.librarymanager.services.*;
 import com.excilys.librarymanager.services.impl.*;
 
 import com.excilys.librarymanager.model.*;
-import com.excilys.librarymanager.exception.*;
+
 
 public class LivreListServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String inputShow = request.getParameter("show");
+        // String inputShow = request.getParameter("show");
         LivreService livreService = LivreServiceImpl.getInstance();
         List<Livre> livres = new ArrayList<>();
         try {
