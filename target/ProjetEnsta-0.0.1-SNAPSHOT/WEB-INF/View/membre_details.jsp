@@ -21,48 +21,48 @@
       </div>
       <div class="row">
       <div class="container">
-		<% id= (int) request.getAttribute("id"); %>
+		<!-- <% id= (int) request.getAttribute("id"); %>
 		<% nom= (String) request.getAttribute("nom"); %>
 		<% prenom= (String) request.getAttribute("prenom"); %>
 		<% email= (String) request.getAttribute("email"); %>
 		<% telephone= (String) request.getAttribute("telephone"); %>
-		<% adresse= (String) request.getAttribute("telephone"); %>
-      <h5>Détails du membre n°<%=id%></h5> <!-- DONE : remplacer 007 par l'id du membre -->
+		<% adresse= (String) request.getAttribute("telephone"); %> -->
+      <h5>Détails du membre n°<c:out value = "${id}"/></h5> <!-- DONE : remplacer 007 par l'id du membre -->
         <div class="row">
-	      <form action="/LibraryManager/membre_details?id=<%=id%>" method="post" class="col s12"> <!-- DONE : remplacer idDuMembre par l'id du membre -->
+	      <form action="/LibraryManager/membre_details?id=${id}" method="post" class="col s12"> <!-- DONE : remplacer idDuMembre par l'id du membre -->
 	        <div class="row">
 	          <div class="input-field col s4">
-	            <input id="nom" type="text" value="<%=nom%>" name="nom"> <!-- DONE : remplacer nomDuMembre par le nom du membre -->
+	            <input id="nom" type="text" value="${nom}" name="nom"> <!-- DONE : remplacer nomDuMembre par le nom du membre -->
 	            <label for="nom">Nom</label>
 	          </div>
 	          <div class="input-field col s4">
-	            <input id="prenom" type="text" value="<%=prenom%>" name="prenom"> <!-- DONE : remplacer prenomDuMembre par le pr�nom du membre -->
-	            <label for="prenom">Pr�nom</label>
+	            <input id="prenom" type="text" value="${prenom}" name="prenom"> <!-- DONE : remplacer prenomDuMembre par le pr�nom du membre -->
+	            <label for="prenom">Prenom</label>
 	          </div>
 	          <div class="input-field col s4">
 	            <select name="abonnement" class="browser-default">
 	              <!-- DONE? : faire en sorte que l'option correspondant à l'abonnement du membre soit sélectionnée par défaut -->
 	              <!-- Pour cela, vous devez rajouter l'attribut selecter sur la balise <option> concernée -->
-	              <option value="BASIC" ${(membre.abonnement == "BASIC") ? " selected" : "" selecter}>Abonnement BASIC</option>
-	              <option value="PREMIUM" ${(membre.abonnement == "PREMIUM") ? " selected" : ""}>Abonnement PREMIUM</option>
-	              <option value="VIP" ${(membre.abonnement == "VIP") ? " selected" : ""}>Abonnement VIP</option>
+	              <option value="BASIC" ${(abonnement == "BASIC") ? " selected" : "" selecter}>Abonnement BASIC</option>
+	              <option value="PREMIUM" ${(abonnement == "PREMIUM") ? " selected" : ""}>Abonnement PREMIUM</option>
+	              <option value="VIP" ${(abonnement == "VIP") ? " selected" : ""}>Abonnement VIP</option>
 	            </select>
 	          </div>
 	        </div>
 	        <div class="row">
 	          <div class="input-field col s12">
-	            <input id="adresse" type="text" value="<%=adresse%>" name="adresse"> <!-- DONE : remplacer adresseDuMembre par l'adresse du membre -->
+	            <input id="adresse" type="text" value="${adresse}" name="adresse"> <!-- DONE : remplacer adresseDuMembre par l'adresse du membre -->
 	            <label for="adresse">Adresse</label>
 	          </div>
 	        </div>
 	        <div class="row">
 	          <div class="input-field col s6">
-	            <input id="email" type="email" value="<%=email%>" name="email"> <!-- DONE : remplacer emailDuMembre par l'email du membre -->
+	            <input id="email" type="email" value="${email}" name="email"> <!-- DONE : remplacer emailDuMembre par l'email du membre -->
 	            <label for="email">E-mail</label>
 	          </div>
 	          <div class="input-field col s6">
-	            <input id="telephone" type="tel" value="<%=telephone%>" name="telephone"> <!-- DONE : remplacer telephoneDuMembre par le t�l�phone du membre -->
-	            <label for="telephone">T�l�phone</label>
+	            <input id="telephone" type="tel" value="${telephone}" name="telephone"> <!-- DONE : remplacer telephoneDuMembre par le t�l�phone du membre -->
+	            <label for="telephone">Telephone</label>
 	          </div>
 	        </div>
 	        <div class="row center">
@@ -72,7 +72,7 @@
 	      </form>
 	      
 	      <form action="/LibraryManager/membre_delete" method="get" class="col s12">
-	        <input type="hidden" value="<%=id%>" name="id"> <!-- DONE? : remplacer idDuMembre par l'id du membre -->
+	        <input type="hidden" value="${id}" name="id"> <!-- DONE? : remplacer idDuMembre par l'id du membre -->
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit">Supprimer le membre
 	            <i class="material-icons right">delete</i>
@@ -91,12 +91,10 @@
                 </tr>
               </thead>
               <tbody id="results">
-
-				<% emprunts= (List) request.getAttribute("emprunts"); %>
-                <c:forEach var="emprunt" items="${emprunts}">
+                <c:forEach var="e" items="${emprunts}">
                 <tr>
-                  <td><%=nom> <%=prenom></td>
-                  <td><%=emprunt.getDateEmprunt%></td>
+                  <td><c:out value = "${e.getIdMembre.getNom()}"/> <c:out value = "${e.getIdMembre.getPrenom()}"/></td>
+                  <td><c:out value = "${e.getDateEmprunt()}"/></td>
                   <td>
                     <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
                   </td>

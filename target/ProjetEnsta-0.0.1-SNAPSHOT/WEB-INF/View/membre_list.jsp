@@ -1,4 +1,3 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,23 +24,22 @@
             <thead>
               <tr>
                 <th>Nom</th>
-                <th>Pr�nom</th>
+                <th>Prenom</th>
                 <th class="hide-on-small-only">Adresse</th>
                 <th class="hide-on-small-only">E-mail</th>
-                <th class="hide-on-small-only">T�l�phone</th>
-                <th>D�tails</th>
+                <th class="hide-on-small-only">Telephone</th>
+                <th>Details</th>
               </tr>
             </thead>
             <tbody>
-              <% membres= (List) request.getAttribute("membres"); %>
-              <c:forEach items="${membres}" var="membre">
+              <c:forEach items="${membres}" var="m">
               <tr>
-                <td><%=membre.getNom()%></td>
-                <td><%=membre.getNom()%></td>
-                <td class="hide-on-small-only"><%=membre.getAdresse()%></td>
-                <td class="hide-on-small-only"><%=membre.getEmail()%></td>
-                <td class="hide-on-small-only"><%=membre.getTelephone()%></td>
-                <td class="center"><a href="membre_details?id=idDuMembre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
+                <td> <c:out value = "${m.getNom()}"/> </td>
+                <td> <c:out value = "${m.prenom()}"/> </td>
+                <td class="hide-on-small-only"><c:out value = "${m.getAdresse()}"/></td>
+                <td class="hide-on-small-only"><c:out value = "${m.getEmail()}"/></td>
+                <td class="hide-on-small-only"><c:out value = "${m.getTelephone()}"/></td>
+                <td class="center"><a href="membre_details?id=<c:out value = "${m.getId()}"/>"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
               </tr>
               </c:forEach>
               <!-- DONE : parcourir la liste des membres et les afficher selon la structure d'exemple ci-dessus -->

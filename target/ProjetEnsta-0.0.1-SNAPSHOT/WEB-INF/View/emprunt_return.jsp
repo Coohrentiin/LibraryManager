@@ -21,7 +21,7 @@
       </div>
       <div class="row">
       <div class="container">
-        <h5>Sélectionnez le livre à retourner</h5>
+        <h5>Selectionnez le livre a retourner</h5>
         <div class="row">
 	      <form action="/LibraryManager/emprunt_return" method="post" class="col s12">
 	        <div class="row">
@@ -30,28 +30,30 @@
 	              <option value="" disabled selected>---</option>
                   <!-- DONE : parcourir la liste des emprunts non rendus et afficher autant d'options que nécessaire, sur la base de l'exemple ci-dessous -->
                     <!-- DONE : si l'attribut id existe, l'option correspondante devra être sélectionnée par défaut (ajouter l'attribut selected dans la balise <option>) -->
-                    <% emprunts= (List) request.getAttribute("listeEmprunts"); %>
+                      <c:if test = "${not empty emprunts}">
+                        <c:forEach items="${emprunts}" var="e">
+                          <option value="${e.getId()}"> "<c:out value = "${e.getLivre().getTitre()}"/>", emprunt&eacute; par <c:out value = "${e.getMembre().getPrenom()}"/> <c:out value = "${e.getMembre().getNom()}"/> </option>
+                        </c:forEach>
+                      </c:if>
+                    
+                    
+                    
                     <c:forEach items="${emprunts}" var="emprunt">
                       <tr>
-                        <% livreId = (int) emprunt.getIdLivre() %>
-                        <% membreId = (int) emprunt.getIdmembre() %>
-                        <% demprunt = emprunt.getDateEmprunt() %>
+                        
     
-                        <% MembreService membreService=MembreServiceImpl.getInstance(); %>
-                        <% LivreService livreService=LivreServiceImpl.getInstance(); %>
-                        <% livre = (Livre) livreService.getById(livreId); %>
-                        <% membre = (Membre) membreService.getById(membreId); %>
-                        <td><%=livre.getTitre()%>, <em><%=livre.getAuteur%></em></td>
-                        <td><%=membre.getNom%> <%=membre.getPrenom%></td>
-                        <td><%=demprunt%></td>
-                        <c:if test=${emprunt.getDateRetour()==null}>
+                       
+                        <td><c:out value = "${e.getLivre().getTitre()}"/>, <em><c:out value = "${e.getLivre().getAuteur()}"/></em></td>
+                        <td><c:out value = "${e.getMembre().getNom()}"/></td> 
+                        <td><c:out value = "${emprunt.dateEmprunt}"/></td>
+                        <c:if test="${emprunt.getDateRetour()==null}">
                           <td>
-                            <a href="emprunt_return?id=idDeLEmprunt">
+                            <a href="emprunt_return?id=${emprunt.id}">
                               <ion-icon class="table-item" name="log-in">
                             </a>
                           </td>
                         </c:if>
-                        <c:if test=${emprunt.id!=null}>
+                        <c:if test="${emprunt.id!=null}">
                           <td>
                            <option selected value="idDeLEmprunt">"Titre du livre", emprunt� par Pr�nom et nom du membre emprunteur</option>
                           </td>

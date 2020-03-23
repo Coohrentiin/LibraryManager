@@ -1,4 +1,3 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,16 +20,16 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du membre n°${membre.id}</h5> <!-- DONE : remplacer 312 par l'id du membre -->
+      <h5>Suppression du membre n°<c:out value="${id_membre}"/></h5> <!-- DONE : remplacer 312 par l'id du membre -->
         <div class="row">
-          <p>�tes-vous s�r de vouloir supprimer la fiche de ${membre.prenom} ${membre.nom} ?</p> <!-- DONE : remplacer prenomDuMembre et nomDuMembre par les valeurs correspondantes -->
+          <p>etes-vous sur de vouloir supprimer la fiche de <c:out value="${membre.prenom}"/> <c:out value="${membre.nom}"/> ?</p> <!-- DONE : remplacer prenomDuMembre et nomDuMembre par les valeurs correspondantes -->
 	      <form action="/LibraryManager/membre_delete" method="post" class="col s12">
-            <input type="hidden" value="${membre.id}" name="id"> <!-- DONE : remplacer idDuMembre par l'id du membre -->
+            <input type="hidden" value=<c:out value="${id_membre}"/> name="id"> <!-- DONE : remplacer idDuMembre par l'id du membre -->
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit" name="action">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/membre_details?id=${membre.id}">Annuler</a> <!-- DONE : remplacer idDuMembre par l'id du membre -->
+	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/membre_details?id=<c:out value="${id_membre}"/>">Annuler</a> <!-- DONE : remplacer idDuMembre par l'id du membre -->
 	        </div>
 	      </form>
 	    </div>	    

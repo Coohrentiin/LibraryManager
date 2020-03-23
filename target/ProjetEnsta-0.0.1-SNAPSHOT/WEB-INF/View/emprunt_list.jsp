@@ -36,35 +36,23 @@
               </thead>
 
               <tbody id="results">
-                <% emprunts= (List) request.getAttribute("emprunts"); %>
-                <c:forEach items="${emprunts}" var="emprunt">
-                  <tr>
-                    <% livreId = (int) emprunt.getIdLivre() %>
-                    <% membreId = (int) emprunt.getIdmembre() %>
-                    <% demprunt = emprunt.getDateEmprunt() %>
-
-                    <% MembreService membreService=MembreServiceImpl.getInstance(); %>
-                    <% LivreService livreService=LivreServiceImpl.getInstance(); %>
-                    <% livre = (Livre) livreService.getById(livreId); %>
-                    <% membre = (Membre) membreService.getById(membreId); %>
-                    <td><%=livre.getTitre()%>, <em><%=livre.getAuteur%></em></td>
-                    <td><%=membre.getNom%> <%=membre.getPrenom%></td>
-                    <td><%=demprunt%></td>
-                    <c:if test=${emprunt.getDateRetour()==null}>
-                      <td>
-                        <a href="emprunt_return?id=idDeLEmprunt">
-                          <ion-icon class="table-item" name="log-in">
-                        </a>
-                      </td>
-                    </c:if>
-                    <c:if test=${emprunt.getDateRetour()!=null}>
-                      <td>
-                        <%=emprunt.getDateRetour()%>
-                      </td>
-                    </c:if>
-                  </tr>
-                </c:forEach>
-
+                <c:if test= "${not empty emprunts}">
+                  <c:forEach items="${emprunts}" var="e">
+                    <tr>
+                          <td> <c:out value = "${e.getLivre().getTitre()}"/>, <em><c:out value = "${e.getLivre().getAuteur()}"/></em> </td>
+                          <td> <c:out value = "${e.getMembre().getPrenom()}"/> <c:out value = "${e.getMembre().getNom()}"/> </td>
+                          <td> <c:out value = "${e.getDateEmprunt()}"/> </td>
+                          <c:choose>
+                            <c:when test= "${not empty e.getDateRetour()}">
+                              <td> <c:out value = "${e.getDateRetour()}"/> </td>
+                            </c:when>
+                            <c:otherwise>
+                              <td> <a href="emprunt_return id=${e.getId()}"><ion-icon class="table-item" name="log-in"></a> </td>
+                            </c:otherwise>
+                          </c:choose>
+                    </tr>
+                  </c:forEach>
+                </c:if>                
                 <!-- DONE : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
                 <!-- DONE : dans le champ "retour", afficher la date de retour si elle existe, et un lien vers la page de retour si la date est vide (comme dans l'exemple ci-dessus) -->
               </tbody>

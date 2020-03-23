@@ -23,7 +23,7 @@
       </div>
       <div class="row">
         <div class="container">
-          <h5>S�lectionnez le livre et le membre emprunteur</h5>
+          <h5>Selectionnez le livre et le membre emprunteur</h5>
           <div class="row">
             <form action="/LibraryManager/emprunt_add" method="post" class="col s12">
               <div class="row">
