@@ -53,6 +53,7 @@ Vous arriverez directement sur la page d'accueil du projet.
 	- Nos DAO pour DaoTest.java
 	- Nos services pour ServiceTest.java 
 
+Nous avons généré la Javadoc, celle ci est disponible dans le dossier "doc" à la racine du projet.
 Maleureusement lors du lancement du serveur la communication avec la DATAbase ne se fait pas correctement et les données ne se mettent pas à jour (Problème lors de la récupération de la liste des membres error : Database may be already in use: null. Possible solutions: close all other connection(s); use the server mode [90020-197]). 
 
 ## Conclusion:
