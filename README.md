@@ -18,7 +18,8 @@ Ainsi ce code est fonctionnel sur Windows via Eclipse et sous Linux via Eclipse 
 Afin de gerer le versionning de notre code nous avons utilisé *GitHub*. Cela nous a permis d'une part de travailler conjointement sur le projet en plus d'utiliser l'option live share de vscode mais également d'implementer progressivement, de revenir à des versions ultérieur ou de faire du développement sur des branches parallèles à la master avant de les "merger".
 
 ## Execusion et lancement:
- Mettre à jours la data base
+
+### Mettre à jours la data base
 Pour cela executer le fichier FillDatabase.java du dossier src/utils. 
 
 Vous pouvez soit le lancer directement depuis votre IDE ou lancer la commande
@@ -27,22 +28,12 @@ cd "DIR" ; /usr/lib/jvm/java-11-openjdk-amd64/bin/java -Dfile.encoding=UTF-8 @/t
 où dir est le path de LibraryManager dans votre pc. Pour nous par exemple c'est: 
 /mnt/c/Users/csoub/OneDrive/Bureau/My desktop/LibraryManager
 
-### 1ere possiblilité
-1. Lancer le serveur Tomcat
-Pour lancer le serveur en local exécuter la commande:
-	mvn clean install tomcat7:run
-Si cela ne fonctionne pas on peut tenter desepérement un:
-	mvn clean install tomcat:run
-
-2. Enjoy
-Sur votre navigateur WEB, mettre dans la barre de recherche: 
-	http://localhost:8080/ProjetEnsta/
-Vous arriverez directement sur la page d'accueil du projet.
-
-### 2e possibilité
+### Lancement du serveur étapes préalables au lancement du serveur
 1. installer l'extension VSCode tomcat for java
 2. ajouter (grâce au "+" dans l'onglet tomcat servers de vscode) le server tomcat téléchargé
 3. dans le terminal lancer les commandes "mvn clean" puis "mvn install"
+
+### Lancement Final
 4. dans le dossier "target" qui vient d'apparaitre, faire clique droit sur le fichier *.war, puis "run on tomcat server"
 5. dans l'onglet "tomcat servers" de VSCode faire clique droit sur l'application disponible puis "open in browser"
 6. si une erreur 404 s'affiche, rafraichir la page jusqu'à obtenir l'affichage attendu
